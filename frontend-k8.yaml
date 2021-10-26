@@ -1,42 +1,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bukscore-frontend
+  name: buksapp-frontend
+  labels:
+    app: buksapp-frontend
 spec:
-  replicas: 2
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
-      app: bukscore-frontend
+      app: buksapp-frontend
+      
   template:
     metadata:
       labels:
-        app: bukscore-frontend
+        app: buksapp-frontend
+        tier: buksapp-frontend
     spec:
       containers:
-      - name: myapp
-        image: bukunmi00/bukscore-frontend
-        imagePullPolicy: Always
-        resources:
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
-        ports:
-        - containerPort: 80
-
+        - name: buksapp-frontend
+          image: bukunmi00/buksapp-frontend:tagversion
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 4000
+            name: buksapp-frontend
 
 
 ---
-
-
 apiVersion: v1
 kind: Service
 metadata:
-  name: bukscore
+  name: buksapp-frontend
+  labels:
+    app: buksapp-frontend
 spec:
-  type: NodePort
-  selector:
-    app: bukscore-frontend
   ports:
-  - port: 80
-    targetPort: 80
-    protocol: TCP
+    - port: 4000
+      targetPort: 4000
+  selector:
+    app: buksapp-frontend
+    tier: buksapp-frontend
+  type: LoadBalancer
