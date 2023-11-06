@@ -5,7 +5,7 @@ pipeline {
     //     CLUSTER_NAME = "k8s-cluster"
     //     LOCATION = "us-central1-c"
     //     CREDENTIALS_ID = 'jenkins-project'
-    }
+    // }
     stages {
         // stage('pull from github repo'){
         //     steps{
