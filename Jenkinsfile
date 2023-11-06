@@ -14,7 +14,7 @@ pipeline {
         // }
         stage('build docker image'){
             steps{
-                sh "docker build -t Test-frontend:${env.BUILD_ID} ."                
+                sh "docker build -t test-frontend:${env.BUILD_ID} ."                
             }
         }
         // stage('push docker image to dockerhub'){
